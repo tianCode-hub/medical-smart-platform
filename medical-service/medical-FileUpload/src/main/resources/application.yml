@@ -1,0 +1,41 @@
+server:
+  port: 51609
+
+spring:
+  application:
+    name: medical-fileUpload
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/medical_cloud?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: "${MYSQL_PASSWORD:052905}"
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      database: 0
+      timeout: 10000ms
+      lettuce:
+        pool:
+          min-idle: 0
+          max-idle: 8
+          max-active: 8
+          max-wait: -1ms
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: public
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        refresh-enabled: true
+
+# MinIO 配置
+minio:
+  endpoint: http://127.0.0.1:9000
+  accessKey: ${MINIO_ACCESS_KEY}
+  secretKey: ${MINIO_SECRET_KEY}
+  bucketName: b2312
+  # 对外访问前缀：生产环境可配置公网域名（如 https://cdn.example.com），不配置时默认使用 endpoint
+  access-path: http://127.0.0.1:9000

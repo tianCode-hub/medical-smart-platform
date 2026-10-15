@@ -1,0 +1,52 @@
+server:
+  port: 51601
+
+spring:
+  application:
+    name: medical-uniapp-gateway
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: public
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: medical-user
+          uri: lb://medical-user
+          predicates:
+            - Path=/user/**
+        - id: medical-doctor
+          uri: lb://medical-doctor
+          predicates:
+            - Path=/doctor/**
+        - id: medical-patient
+          uri: lb://medical-patient
+          predicates:
+            - Path=/patients/**,/patient/**
+        - id: medical-medicine
+          uri: lb://medical-medicine
+          predicates:
+            - Path=/medicines/**,/medicine/**
+        - id: medical-department
+          uri: lb://medical-department
+          predicates:
+            - Path=/departments/**
+        - id: medical-appointment
+          uri: lb://medical-appointment
+          predicates:
+            - Path=/appointments/**,/appointment/**
+        - id: medical-fileUpload
+          uri: lb://medical-fileUpload
+          predicates:
+            - Path=/files/**,/fileUpload/**,/file/**

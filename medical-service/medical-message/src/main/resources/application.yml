@@ -1,0 +1,58 @@
+server:
+  port: 51608
+
+spring:
+  application:
+    name: medical-message
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/medical_cloud?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: "${MYSQL_PASSWORD:052905}"
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      database: 0
+      timeout: 10000ms
+      lettuce:
+        pool:
+          min-idle: 0
+          max-idle: 8
+          max-active: 8
+          max-wait: -1ms
+  rabbitmq:
+    host: 192.168.27.101
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    listener:
+      simple:
+        # 消费者线程池：并行消费请假通知等消息，内存放站内消息，提升吞吐
+        concurrency: 4
+        max-concurrency: 8
+        acknowledge-mode: auto
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: public
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        refresh-enabled: true
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+feign:
+  httpclient:
+    enabled: true
+    max-connections: 200
+    max-connections-per-route: 50
+  sentinel:
+    # 开启 Sentinel 对 Feign 的支持，使 fallbackFactory 兜底生效
+    enabled: true

@@ -1,0 +1,24 @@
+package com.medical.department.feign;
+
+import com.medical.department.service.DepartmentService;
+import com.medical.feign.department.IDepartmentClient;
+import com.medical.model.department.Department;
+import com.medical.utils.annotation.NoLoginCheck;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class DepartmentClient implements IDepartmentClient {
+    @Autowired
+    private DepartmentService departmentService;
+
+    // 内部 Feign 调用不携带登录态，需免登录放行
+    @Override
+    @NoLoginCheck
+    @GetMapping("/departments/client/{id}")
+    public Department findDepartmentById(@PathVariable("id") Integer id) {
+        return departmentService.getById(id);
+    }
+}

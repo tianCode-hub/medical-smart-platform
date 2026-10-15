@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.medical</groupId>
+        <artifactId>medical_cloud</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.medical.service</groupId>
+    <artifactId>medical-service</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>medical-user</module>
+        <module>medical-FileUpload</module>
+        <module>medical-doctor</module>
+        <module>medical-patient</module>
+        <module>medical-medicine</module>
+        <module>medical-appointment</module>
+        <module>medical-department</module>
+        <module>medical-message</module>
+    </modules>
+
+    <dependencies>
+        <!-- 项目内部模块 -->
+        <dependency>
+            <groupId>com.medical.model</groupId>
+            <artifactId>medical-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.medical.feign</groupId>
+            <artifactId>medical-feign-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.medical.utils</groupId>
+            <artifactId>medical-utils</artifactId>
+        </dependency>
+
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- 数据库 -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+        </dependency>
+        <!-- PageHelper 分页：使用核心库而非 starter。
+             starter 的 PageHelperAutoConfiguration 依赖 org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration，
+             而 Spring Boot 3 下该自动配置类已随 mybatis-spring-boot-starter 移除，会导致启动失败；
+             改用核心库 + medical-utils 中手动注册的 PageInterceptor -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>6.1.0</version>
+        </dependency>
+
+        <!-- Redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- RabbitMQ -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <!-- Nacos (配置需要 bootstrap 上下文) -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <!--openFeign服务调用-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!--        openfeign默认支持负载均衡-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
+        <!-- Sentinel 限流 / 熔断 / 降级：Feign 集成后 fallbackFactory 兜底生效（feign.sentinel.enabled=true） -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+
+        <!-- Spring Security：方法级 RBAC 权限控制（@PreAuthorize），认证仍走现有 JWT+Redis+LoginInterceptor。
+             仅 8 个业务服务引入，网关（WebFlux）不依赖本 pom -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- MinIO -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+        </dependency>
+
+        <!-- Hutool -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+
+        <!--            oss-->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+        </dependency>
+    </dependencies>
+</project>

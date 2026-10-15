@@ -1,0 +1,22 @@
+# 编译产物
+target/
+*.class
+
+# 原 git 历史备份
+.git_original_backup/
+
+# IDEA
+.idea/
+*.iml
+
+# 日志与临时文件
+*.log
+*.tmp
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 环境配置（如含敏感信息的本地配置，按需开启）
+# application-local.yml
